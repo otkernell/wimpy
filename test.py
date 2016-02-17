@@ -28,12 +28,6 @@ THE SOFTWARE.
 
 import numpy as np
 import wimpy.sym as sym
-import ibvp as ibvp
-
-
-
-
-print('Hello World')
 
 def test_duality_pairing():
     u = sym.Field("u")
@@ -47,13 +41,12 @@ def test_duality_pairing():
     
     print(sym.pretty(eqns2))
 
-test_duality_pairing()
 
-#def is_div_grad(expr):
-#	return isinstance(...) and isinstance(...)
-#	if isinstance(expr.op, sym.OperatorBinding):
-#		if isinstance(expr.arguments, sym.div):
-#			return True
-#	else:
-#		return False
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        exec(sys.argv[1])
+    else:
+        from py.test.cmdline import main
+        main([__file__])
 		
