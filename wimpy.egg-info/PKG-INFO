@@ -1,0 +1,44 @@
+Metadata-Version: 1.1
+Name: wimpy
+Version: 2014.1
+Summary: A data model for the description of (initial) boundary value problems, plus transformations
+Home-page: http://wiki.tiker.net/IBVP
+Author: Test
+Author-email: test
+License: test
+Description: wimpy
+        ====
+        
+        .. image:: https://badge.fury.io/py/ibvp.png
+            :target: http://pypi.python.org/pypi/ibvp
+        
+        ibvp provides a data model to describe boundary value problems (BVPs) and
+        initial boundary value problems (IBVPs). It also contains code to make
+        these descriptions palatable to a variety of PDE solvers.
+        
+        ibvp is under the MIT license.
+        
+        Resources:
+        
+        * `wiki home page <http://wiki.tiker.net/IBVP>`_
+        * `source code via git <https://github.com/ibvp/ibvp>`_
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Other Audience
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.5
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Utilities

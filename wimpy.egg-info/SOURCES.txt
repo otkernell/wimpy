@@ -1,0 +1,16 @@
+README.rst
+setup.cfg
+setup.py
+wimpy/__init__.py
+wimpy/sym.py
+wimpy/version.py
+wimpy.egg-info/PKG-INFO
+wimpy.egg-info/SOURCES.txt
+wimpy.egg-info/dependency_links.txt
+wimpy.egg-info/requires.txt
+wimpy.egg-info/top_level.txt
+wimpy/language/__init__.py
+wimpy/language/symbolic/__init__.py
+wimpy/language/symbolic/mappers.py
+wimpy/language/symbolic/primitives.py
+wimpy/language/symbolic/util.py
