@@ -36,16 +36,16 @@ import ibvp as ibvp
 print('Hello World')
 
 def test_duality_pairing():
-	u = sym.Field("u")
-	v = sym.Field("v")
-	
-	eqns = -sym.div(sym.grad(u))
-	
-	print(sym.pretty(eqns))
-	
-	eqns2 = sym.DualityPairing(u,v)
-	
-	print(sym.pretty(eqns2))
+    u = sym.Field("u")
+    v = sym.Field("v")
+    
+    eqns = -sym.div(sym.grad(u))
+    
+    print(sym.pretty(eqns))
+    
+    eqns2 = sym.DualityPairing(u,v)
+    
+    print(sym.pretty(eqns2))
 
 test_duality_pairing()
 

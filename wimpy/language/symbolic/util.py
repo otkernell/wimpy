@@ -29,7 +29,7 @@ import numpy as np
 
 
 def pretty(expr):
-    from ibvp.language.symbolic.mappers import PrettyStringifyMapper
+    from wimpy.language.symbolic.mappers import PrettyStringifyMapper
     stringify_mapper = PrettyStringifyMapper()
     from pymbolic.mapper.stringifier import PREC_NONE
     result = stringify_mapper(expr, PREC_NONE)

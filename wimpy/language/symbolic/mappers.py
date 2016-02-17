@@ -5,24 +5,27 @@ from six.moves import range
 
 
 from ibvp.language.symbolic.mappers import (
-                                               IdentityMapper as IdentityMapperBase,
-                                               CombineMapper as CombineMapperBase,
-                                               Collector as CollectorBase,
-                                               WalkMapper as WalkMapperBase,
-                                               EvaluationMapper as EvaluationMapperBase,
-                                               StringifyMapper as StringifyMapperBase,
-                                               Dimensionalizer,
-                                               DerivativeBinder as DerivativeBinderBase,
-                                               
-                                               DerivativeSourceAndNablaComponentCollector
-                                               as DerivativeSourceAndNablaComponentCollectorBase,
-                                               NablaComponentToUnitVector
-                                               as NablaComponentToUnitVectorBase,
-                                               DerivativeSourceFinder
-                                               as DerivativeSourceFinderBase, DifferentiationMapper as DifferentiationMapperBase, PrettyStringifyMapper as PrettyStringifyMapperBase,DistributeMapper as DistributeMapperBase, Scalarizer as ScalarizerBase
-                                               
-                                               )
+    IdentityMapper as IdentityMapperBase,
+    CombineMapper as CombineMapperBase,
+    Collector as CollectorBase,
+    WalkMapper as WalkMapperBase,
+    EvaluationMapper as EvaluationMapperBase,
+    StringifyMapper as StringifyMapperBase,
+    Dimensionalizer,
+    DerivativeBinder as DerivativeBinderBase,
+    
+    DerivativeSourceAndNablaComponentCollector
+    as DerivativeSourceAndNablaComponentCollectorBase,
+    NablaComponentToUnitVector
+    as NablaComponentToUnitVectorBase,
+    DerivativeSourceFinder
+    as DerivativeSourceFinderBase, DifferentiationMapper as DifferentiationMapperBase, PrettyStringifyMapper as PrettyStringifyMapperBase,DistributeMapper as DistributeMapperBase, Scalarizer as ScalarizerBase
+)
 
+from pymbolic.mapper.stringifier import (
+    CSESplittingStringifyMapperMixin,
+    PREC_NONE
+)
 
 import ibvp.language.symbolic.primitives as ibvp
 import pymbolic.primitives as pp
@@ -31,30 +34,30 @@ import numpy as np
 
 
 class IdentityMapper(IdentityMapperBase):
-    def map_duality(self,expr):
+    def map_duality_pairing(self,expr):
         return expr
         
-
+        
 class CombineMapper(CombineMapperBase):
-	pass
-
+    pass
+    
 class Collector(CollectorBase, CombineMapper):
-	pass
+    pass
 
 class WalkMapper(WalkMapperBase):
-	pass
+    pass
 
 class StringifyMapper(StringifyMapperBase):
-	#do I need operations and arguments here or just operations?
-	def map_duality_pairing(self, expr, enclosing_prec):
-		if expr.domain:
-			dom = "_%s" % (self.rec(expr.domain),)
-		else:
-			dom = ""
-		return "(%s, %s)%s" % (self.rec(expr.trialexpr, PREC_NONE),
-								self.rec(expr.testexpr,PREC_NONE), 
-								dom)
-		print('StringifyMapper')
+    #do I need operations and arguments here or just operations?
+    def map_duality_pairing(self, expr, enclosing_prec):
+        if expr.domain:
+            dom = "_%s" % (self.rec(expr.domain),)
+        else:
+            dom = ""
+            return "(%s, %s)%s" % (self.rec(expr.trialexpr, PREC_NONE),
+                                   self.rec(expr.testexpr,PREC_NONE), 
+                                   dom)
+            print('StringifyMapper')
 	#new file
 	#if trialop == -div(grad)
 	#	return "(%s, %s)_%s+" % (self.rec(expr.trialop, PREC_NONE),
@@ -64,39 +67,46 @@ class StringifyMapper(StringifyMapperBase):
 	#	return "
 	#separate script for duality pairing? Where should the conversion
 	#occur?
-	
-class PrettyStringifyMapper(PrettyStringifyMapperBase):
-	pass
+
+class PrettyStringifyMapper(
+        CSESplittingStringifyMapperMixin,
+        StringifyMapper):
+    pass
+
+#class PrettyStringifyMapper(PrettyStringifyMapperBase):
+#    def map_duality_pairing(self, expr, enclosing_prec):
+#        return "hi there"
+        
 
 class DistributeMapper(DistributeMapperBase):
-	pass
+    pass
 
 class EvaluationMapper(EvaluationMapperBase):
-	pass
-
+    pass
+        
 class DerivativeSourceAndNablaComponentCollector(
-                                                 DerivativeSourceAndNablaComponentCollectorBase,
-                                                 Collector):
-	pass
+        DerivativeSourceAndNablaComponentCollectorBase,
+        Collector):
+    pass
 
 class NablaComponentToUnitVector(
-                                 NablaComponentToUnitVectorBase,
-                                 EvaluationMapper):
-	pass
+        NablaComponentToUnitVectorBase,
+        EvaluationMapper):
+    pass
 
 class DerivativeSourceFinder(
-                             DerivativeSourceFinderBase,
-                             EvaluationMapper):
-	pass
+        DerivativeSourceFinderBase,
+        EvaluationMapper):
+    pass
 
 class DerivativeBinder(DerivativeBinderBase):
-	pass
+    pass
 
 class Scalarizer(ScalarizerBase):
-	pass
+    pass
 
 class DifferentiationMapper(DifferentiationMapperBase):
-	pass
+    pass
 
 
 
