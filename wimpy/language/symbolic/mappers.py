@@ -108,7 +108,14 @@ class Scalarizer(ScalarizerBase):
 class DifferentiationMapper(DifferentiationMapperBase):
     pass
 
-
+#class DivGradIBP(IdentityMapper):
+#	def map_duality_pairing(self,expr):
+#		def is_div_grad(expr):
+#			
+#		if is_div_grad(expr):
+#			return "
+#		else
+#			return expr	
 
 
 

@@ -44,10 +44,17 @@ def test_duality_pairing():
     print(sym.pretty(eqns))
     
     eqns2 = sym.DualityPairing(u,v)
+    eqns2 = sym.DualityPairing(eqns,v)
     
     print(sym.pretty(eqns2))
+    eqns3 = sym.DualityPairing(u,v)
+    
+    print(sym.pretty(eqns2 + eqns3))
+	
 
 test_duality_pairing()
+
+
 
 #def is_div_grad(expr):
 #	return isinstance(...) and isinstance(...)

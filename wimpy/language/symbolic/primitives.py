@@ -23,6 +23,8 @@ class DualityPairing(Expression):
         self.testexpr = testexpr
         self.domain = domain
         #etc?
+    def __getinitargs__(self):
+        return self.trialexpr, self.testexpr, self.domain
     
     mapper_method=intern("map_duality_pairing")
 
