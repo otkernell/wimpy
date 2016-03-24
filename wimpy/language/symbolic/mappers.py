@@ -27,9 +27,10 @@ from pymbolic.mapper.stringifier import (
     PREC_NONE
 )
 
-import ibvp.language.symbolic.primitives as ibvp
+import ibvp.language.symbolic.primitives as ibvpp
 import pymbolic.primitives as pp
 import numpy as np
+import wimpy.language.symbolic.primitives as w
 
 
 
@@ -108,16 +109,57 @@ class Scalarizer(ScalarizerBase):
 class DifferentiationMapper(DifferentiationMapperBase):
     pass
 
-#class DivGradIBP(IdentityMapper):
-#	def map_duality_pairing(self,expr):
-#		def is_div_grad(expr):
-#			
-#		if is_div_grad(expr):
-#			return "
-#		else
-#			return expr	
+class HasSomethingMapper(CombineMapper):
+    def combine(self, values):
+        import operator
+        return reduce(operator.or_, values)
+
+    def map_constant(self, expr):
+        return False
+
+    map_field = map_constant
+    map_derivative = map_constant
+    map_time_derivative = map_constant
+    
+class HasGradMapper(HasSomethingMapper):
+	def map_grad(self, expr):
+		return True
+
+has_grad = HasGradMapper()
+
+class DivGradIBP(IdentityMapper):
+	#has_grad = HasGradMapper()
+	def map_duality_pairing(self,expr):
+		trialexpr = expr.trialexpr
+		if isinstance(trialexpr.op, ibvpp._Div):
+			divargument = trialexpr.argument
+			if has_grad(divargument):
+				return -1*w.DualityPairing(divargument, w.grad(expr.testexpr))						
+		else:
+			return expr	
 
 
-
-
-
+class MyDistributeMapper(IdentityMapper):
+	def map_duality_pairing(self, expr):
+		if isinstance(expr.trialexpr, pp.Sum): #we had ibvpp.Sum? Having problems with this
+			factors = tuple()
+			for ch in expr.trialexpr.children:
+				factors = factors + (self.rec(w.DualityPairing(ch,expr.testexpr)),)
+			return pp.Sum(factors)
+		elif isinstance(expr.trialexpr, pp.Product):
+			const_factors = tuple()
+			nonconst_factors = tuple()
+			for ch in expr.trialexpr.children:
+				if isinstance(ch, int) or isinstance(ch, float):
+					const_factors = const_factors + (ch,)
+				else:
+					nonconst_factors = nonconst_factors + (ch,)
+			cf = pp.Product(const_factors)
+			if len(nonconst_factors) == 1:
+				return cf * self.rec(w.DualityPairing(nonconst_factors[0], expr.testexpr))
+			else:
+				ncf = pp.Product(nonconst_factors)
+				return cf * w.DualityPairing(ncf, expr.testexpr)
+		else:
+			return expr
+				

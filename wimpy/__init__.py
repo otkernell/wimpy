@@ -24,5 +24,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-from pymbolic import disable_subscript_by_getitem
-disable_subscript_by_getitem()
+#from pymbolic import disable_subscript_by_getitem
+#disable_subscript_by_getitem()

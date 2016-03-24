@@ -29,28 +29,44 @@ THE SOFTWARE.
 import numpy as np
 import wimpy.sym as sym
 import ibvp as ibvp
+import pymbolic as p
 
 
 
 
-print('Hello World')
+
+def is_constant(value):
+    return isinstance(value, p.VALID_CONSTANT_CLASSES)
+
 
 def test_duality_pairing():
-    u = sym.Field("u")
-    v = sym.Field("v")
-    
-    eqns = -sym.div(sym.grad(u))
-    
-    print(sym.pretty(eqns))
-    
-    eqns2 = sym.DualityPairing(u,v)
-    eqns2 = sym.DualityPairing(eqns,v)
-    
-    print(sym.pretty(eqns2))
-    eqns3 = sym.DualityPairing(u,v)
-    
-    print(sym.pretty(eqns2 + eqns3))
+	u = sym.Field("u")
+	v = sym.Field("v")
+	w = sym.Field("w")
 	
+	divgradIBP = sym.DivGradIBP()
+	eqns = sym.DualityPairing(sym.div(2*sym.grad(u)),v)
+	a = divgradIBP(eqns)
+	print(sym.pretty(a))
+    
+	distributetest = sym.MyDistributeMapper()
+    
+	eqns2 = sym.DualityPairing(u+w+v,v)
+	b = distributetest(eqns2)
+	print(sym.pretty(b))
+    
+	eqns3 = sym.DualityPairing(3*u*4*w,v)
+	c = distributetest(eqns3)
+	print(sym.pretty(c))
+	
+	eqns4 = sym.DualityPairing(u*(u+v),v)
+	d = distributetest(eqns4)
+	print(sym.pretty(d))
+
+#    has_grad = sym.HasGradMapper()
+#    print(sym.pretty(eqns))
+#    eqns2 = sym.DualityPairing(eqns,v)
+
 
 test_duality_pairing()
 
