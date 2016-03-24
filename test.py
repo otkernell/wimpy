@@ -63,20 +63,11 @@ def test_duality_pairing():
 	d = distributetest(eqns4)
 	print(sym.pretty(d))
 
-#    has_grad = sym.HasGradMapper()
-#    print(sym.pretty(eqns))
-#    eqns2 = sym.DualityPairing(eqns,v)
 
-
-test_duality_pairing()
-
-
-
-#def is_div_grad(expr):
-#	return isinstance(...) and isinstance(...)
-#	if isinstance(expr.op, sym.OperatorBinding):
-#		if isinstance(expr.arguments, sym.div):
-#			return True
-#	else:
-#		return False
-		
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        exec(sys.argv[1])
+    else:
+        from py.test.cmdline import main
+        main([__file__])
